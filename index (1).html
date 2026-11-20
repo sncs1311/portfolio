@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>surya@portfolio ~ — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════ EDIT THESE ════════════
+   Glow colors around the terminal window (left → right) */
+:root{
+  --glow-left:#2f7bff;   /* blue glow  */
+  --glow-right:#ff3fd0;  /* pink glow  */
+  --glow-strength:.55;   /* 0 – 1      */
+/* ════════════════════════════════════ */
+  --bg:#020203;
+  --win:#07070a;
+  --white:#f3f3f5;
+  --green:#4df26e;
+  --blue:#3db8ff;
+  --pink:#ff63d6;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--white);font-family:'Cascadia Code','Cascadia Mono',Consolas,'SF Mono',Menlo,monospace;font-size:14.5px;line-height:1.65;font-variant-ligatures:none;display:flex;align-items:center;justify-content:center;padding:3rem 2rem;overflow:hidden;-webkit-font-smoothing:antialiased}
+.win{position:relative;width:min(960px,100%);height:100%;max-height:780px;display:flex;flex-direction:column;border-radius:16px;border:1.5px solid transparent;background:linear-gradient(var(--win),var(--win)) padding-box,linear-gradient(100deg,var(--glow-left),#8a7bff 50%,var(--glow-right)) border-box;box-shadow:-18px 0 70px -12px color-mix(in srgb,var(--glow-left) calc(var(--glow-strength)*100%),transparent),18px 0 70px -12px color-mix(in srgb,var(--glow-right) calc(var(--glow-strength)*100%),transparent),0 0 0 1px rgba(255,255,255,.03) inset}
+.bar{display:grid;grid-template-columns:70px 1fr 70px;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06);flex:none}
+.dots{display:flex;gap:.55rem}
+.dot{width:12px;height:12px;border-radius:50%}
+.title{text-align:center;font-size:.8rem;opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#term{flex:1;overflow-y:auto;padding:1.6rem 1.8rem 1.2rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.blk{margin-bottom:1.15rem;animation:in .28s ease both}
+@keyframes in{from{opacity:0;transform:translateY(5px)}}
+.pr{color:var(--white)}
+.cmd{color:var(--green)}
+.g{color:var(--green)}.b{color:var(--blue)}.p{color:var(--pink)}.dim{opacity:.6}
+.name{font-size:clamp(1.9rem,5.5vw,3.1rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;background:linear-gradient(95deg,var(--blue),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.6rem}
+h4{color:var(--blue);font-weight:700;font-size:1em;margin-bottom:.55rem}
+h4::before{content:'# ';color:var(--pink)}
+.out p+p{margin-top:.6rem}
+.kv{display:grid;grid-template-columns:max-content 1fr;column-gap:2.2ch;row-gap:.3rem}
+.kv>:nth-child(odd){color:var(--blue)}
+.help>:nth-child(odd){color:var(--green)}
+.item{border-left:2px solid var(--blue);padding:.1rem 0 .1rem 1.3ch;margin:0 0 1.1rem 1ch;transition:border-color .2s}
+.item:hover{border-color:var(--pink)}
+.item:last-child{margin-bottom:0}
+.item .hd{font-weight:600}
+.item .hd .g{margin-right:.7ch}
+.item p{margin:.35rem 0 .5rem}
+.tag{display:inline-block;color:var(--blue);border:1px solid rgba(61,184,255,.4);border-radius:4px;padding:0 .8ch;margin:0 .8ch .3rem 0;font-size:.82em}
+.ls{display:grid;grid-template-columns:repeat(auto-fill,minmax(18ch,1fr));gap:.1rem 2ch}
+a{color:var(--blue);text-decoration:none;border-bottom:1px dashed rgba(61,184,255,.6)}
+a:hover{color:var(--bg);background:var(--blue)}
+.err{color:var(--pink)}
+form.pf{display:flex;align-items:center;gap:1ch;margin-top:.2rem}
+form.pf label{white-space:nowrap;color:var(--white)}
+#in{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--green);font:inherit;font-size:16px;caret-color:var(--green);caret-shape:block}
+.chips{display:flex;gap:.55rem;flex-wrap:wrap;padding:.9rem 1.3rem 1.1rem;border-top:1px solid rgba(255,255,255,.06);flex:none}
+.chips button{background:none;border:1px solid rgba(255,255,255,.16);color:var(--white);font:inherit;font-size:.78rem;padding:.3rem .95rem;border-radius:999px;cursor:pointer;transition:.18s}
+.chips button:hover{color:var(--green);border-color:var(--green);transform:translateY(-1px)}
+@media (max-width:700px){body{padding:1rem .7rem;font-size:13.5px}.win{border-radius:12px}#term{padding:1.1rem 1rem}.kv{grid-template-columns:1fr;row-gap:0}.kv>:nth-child(even){margin-bottom:.6rem}.ls{grid-template-columns:1fr 1fr}.bar{grid-template-columns:60px 1fr 0}}
+@media (prefers-reduced-motion:reduce){.blk{animation:none}}
+</style>
+</head>
+<body>
+<div class="win">
+  <div class="bar">
+    <div class="dots"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
+    <div class="title">surya@portfolio ~ %</div><div></div>
+  </div>
+  <div id="term">
+    <div id="log"></div>
+    <form class="pf" id="f" autocomplete="off"><label for="in">surya@portfolio ~ %</label><input id="in" spellcheck="false" autocapitalize="off" aria-label="Terminal command"></form>
+  </div>
+  <div class="chips" id="chips"></div>
+</div>
+
+<script>
+(function(){
+var term=document.getElementById('term'),log=document.getElementById('log'),inp=document.getElementById('in'),hist=[],hi=0,busy=false;
+var GH='<a href="https://github.com/';
+function pairs(rows,cls){return '<div class="kv '+(cls||'')+'">'+rows.map(function(r){return '<span>'+r[0]+'</span><span>'+r[1]+'</span>'}).join('')+'</div>'}
+var C={
+help:function(){return '<h4>commands</h4>'+pairs([['about','who I am'],['experience','where I’ve worked'],['projects','things I’ve built'],['skills','my toolbox'],['education','school'],['contact','get in touch'],['ls','list files'],['clear','clear the screen']],'help')+'<p class="dim" style="margin-top:.7rem">Tab autocompletes · ↑ ↓ browse history · or tap a button below</p>'},
+whoami:function(){return '<div class="name">Surya Narayan<br>C Shenoy</div><p class="dim">B.Tech CSE · MNNIT Allahabad · class of 2027</p>'},
+about:function(){return '<h4>about.md</h4><p>I’m a Computer Science undergraduate at MNNIT Allahabad, focused on designing systems and exploring applied machine learning. Most of my work sits around backend pipelines, computer vision, and full-stack web apps—from real-time fraud detection to industrial asset platforms. Next up, I’m planning to dive into security.</p>'},
+experience:function(){return '<h4>experience.log</h4><div class="item"><div class="hd">Software Engineering &amp; Data Science Intern</div><div class="p">Nasser S. Al-Hajri Corporation</div><div class="dim">Al Khobar, Saudi Arabia · Jun 2026 – Nov 2026</div><p>▸ Built a Next.js + Prisma + PostgreSQL platform for ~1,000 industrial assets with JWT auth, RBAC and full CRUD.<br>▸ Designed a normalized schema and a dashboard for fleet performance.<br>▸ Trained XGBoost and Random Forest models for breakdown risk and fuel forecasting.</p></div>'},
+projects:function(){return '<h4>projects/</h4>'+
+'<div class="item"><div class="hd"><span class="g">UAV Litter Detection</span><span class="dim">computer vision</span></div><p>A hybrid IoU + Normalized Wasserstein loss in YOLOv8m reaches 78.55% mAP@0.50 (+3.45 over the best published baseline). SAM 2 adds pixel masks with no extra training.</p><span class="tag">PyTorch</span><span class="tag">YOLOv8</span><span class="tag">SAM 2</span><span class="tag">OpenCV</span><br>'+GH+'UditanshSri/uavvaste-litter-detection" target="_blank" rel="noopener">github ↗</a></div>'+
+'<div class="item"><div class="hd"><span class="g">TRAP</span><span class="dim">real-time fraud pipeline</span></div><p>Redis Streams feed an XGBoost worker scoring at 3.4 ms p95 and ~2,100 events/s, with SHAP explanations in an analyst console and PSI drift monitoring. AUC-PR 0.955.</p><span class="tag">FastAPI</span><span class="tag">Redis</span><span class="tag">XGBoost</span><span class="tag">Next.js</span><span class="tag">Docker</span><br>'+GH+'sncs1311/TRAP" target="_blank" rel="noopener">github ↗</a></div>'+
+'<div class="item"><div class="hd"><span class="g">Askit</span><span class="dim">private document retrieval</span></div><p>Offline Q&amp;A over PDF, DOCX and CSV with Llama 3. Hybrid keyword + vector retrieval, and every answer maps to a verifiable source citation.</p><span class="tag">LangChain</span><span class="tag">ChromaDB</span><span class="tag">Ollama</span><span class="tag">FastAPI</span><br>'+GH+'sncs1311/askit" target="_blank" rel="noopener">github ↗</a></div>'},
+skills:function(){return '<h4>skills.txt</h4>'+pairs([['Languages:','Python, JavaScript (ES6+), C++, Java, SQL'],['Frameworks:','Next.js, React.js, Node.js, FastAPI, Prisma'],['Libraries:','NumPy, Pandas, PyTorch, XGBoost, scikit-learn, SHAP, LangChain, OpenCV'],['Databases &amp; Caching:','PostgreSQL, Redis, ChromaDB, Elasticsearch'],['Developer Tools:','Git, Docker, Ollama']])},
+education:function(){return '<h4>education.txt</h4><div class="item"><div class="hd">B.Tech, Computer Science &amp; Engineering</div><div class="p">Motilal Nehru National Institute of Technology, Allahabad</div><div class="dim">Aug 2023 – May 2027</div></div>'},
+contact:function(){return '<h4>contact.sh</h4>'+pairs([['email','<a href="mailto:sncs4123@gmail.com">sncs4123@gmail.com</a>'],['github',GH+'sncs1311" target="_blank" rel="noopener">github.com/sncs1311</a>'],['linkedin','<a href="https://linkedin.com/in/surya-narayan-c-shenoy-473092300" target="_blank" rel="noopener">surya-narayan-c-shenoy</a>'],['phone','<a href="tel:+918111882255">+91-8111882255</a>']])+'<p style="margin-top:.7rem" class="g">Open to internships and collaborations. Say hi!</p>'},
+ls:function(){return '<div class="ls"><span class="p">about.md</span><span>experience.log</span><span class="b">projects/</span><span class="g">skills.txt</span><span>education.txt</span><span class="g">contact.sh</span></div>'},
+sudo:function(){return '<span class="err">permission denied — but you can still hire me.</span>'}
+};
+C.hire=C.contact;
+var names=['help','about','experience','projects','skills','education','contact','ls','clear'];
+function down(){term.scrollTop=term.scrollHeight}
+function block(html,cls){var d=document.createElement('div');d.className='blk '+(cls||'');d.innerHTML=html;log.appendChild(d);down();return d}
+function output(c){
+  if(c==='clear'){log.innerHTML='';return}
+  if(Object.prototype.hasOwnProperty.call(C,c))block(C[c](),'out');
+  else block('command not found: '+c.replace(/[<>&]/g,'')+' — try “help”','err');
+}
+function echo(c){return block('<span class="pr">surya@portfolio ~ %</span> <span class="cmd"></span>').lastChild}
+function run(raw){var c=raw.trim().toLowerCase();if(!c||busy)return;var s=echo();s.textContent=c;output(c)}
+function typeRun(c,done){busy=true;var s=echo(),i=0;(function k(){if(i<c.length){s.textContent+=c[i++];setTimeout(k,75)}else{setTimeout(function(){busy=false;output(c);if(done)done()},250)}})()}
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();var v=inp.value;if(v.trim()){hist.push(v);hi=hist.length}inp.value='';run(v)});
+inp.addEventListener('keydown',function(e){
+  if(e.key==='ArrowUp'&&hist.length){hi=Math.max(0,hi-1);inp.value=hist[hi];e.preventDefault()}
+  else if(e.key==='ArrowDown'){hi=Math.min(hist.length,hi+1);inp.value=hist[hi]||'';e.preventDefault()}
+  else if(e.key==='Tab'){e.preventDefault();var m=names.filter(function(n){return n.indexOf(inp.value.toLowerCase())===0});if(m.length===1)inp.value=m[0]}});
+var ch=document.getElementById('chips');
+names.forEach(function(n){var b=document.createElement('button');b.type='button';b.textContent=n;b.onclick=function(){run(n)};ch.appendChild(b)});
+typeRun('whoami',function(){block('<span class="dim">type <span class="g">help</span> or tap a command below ↓</span>')});
+})();
+</script>
+</body>
+</html>
